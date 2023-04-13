@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegistrationMail;
+use App\Models\Shift;
+use App\Models\Toll;
 use App\Traits\ImageTrait;
 use Illuminate\Support\Facades\Storage;
 use File;
@@ -24,7 +26,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $stuffs = User::Role('STUFF')->get();
+        $stuffs = User::Role('STUFF')->with(['toll', 'shift'])->get();
+        // return $stuffs;
         return view('admin.stuff.list')->with(compact('stuffs'));
     }
 
@@ -35,7 +38,9 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('admin.stuff.create');
+        $tolls = Toll::get();
+        $shifts = Shift::get();
+        return view('admin.stuff.create')->with(compact('tolls','shifts'));
     }
 
     /**
@@ -51,23 +56,20 @@ class CustomerController extends Controller
             'email' => 'required|unique:users|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
             'password' => 'required|min:8',
             'confirm_password' => 'required|min:8|same:password',
-            'address' => 'required',
-            'phone' => 'required',
+            'toll' => 'required',
+            'shift' => 'required',
             'profile_picture' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
-            'status' => 'required',
-            'pincode' => 'required',
+            'status' => 'required'
         ]);
 
         $data = new User();
         $data->name = $request->name;
         $data->email = $request->email;
         $data->password = bcrypt($request->password);
-        $data->address = $request->address;
-        $data->phone = $request->phone;
+        $data->shift_id = $request->shift;
+        $data->toll_id = $request->toll;
         $data->status = $request->status;
-        $data->city = $request->city;
-        $data->country = $request->country;
-        $data->pincode = $request->pincode;
+        $data->stuff_id = $this->randomStuffId();
         $data->profile_picture = $this->imageUpload($request->file('profile_picture'), 'customer');
         $data->save();
         $data->assignRole('STUFF');
@@ -78,7 +80,7 @@ class CustomerController extends Controller
             'type' => 'Stuff',
         ];
 
-        Mail::to($request->email)->send(new RegistrationMail($maildata));
+        // Mail::to($request->email)->send(new RegistrationMail($maildata));
         return redirect()->route('stuffs.index')->with('message', 'Stuff created successfully.');
     }
 
@@ -100,8 +102,10 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $stuff = User::findOrFail($id);
-        return view('admin.stuff.edit')->with(compact('stuff'));
+        $tolls = Toll::get();
+        $shifts = Shift::get();
+        $stuff = User::with(['toll', 'shift'])->findOrFail($id);
+        return view('admin.stuff.edit')->with(compact('stuff', 'tolls', 'shifts'));
     }
 
     /**
@@ -175,5 +179,12 @@ class CustomerController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return redirect()->route('stuffs.index')->with('error', 'Stuff has been deleted successfully.');
+    }
+
+    public function randomStuffId()
+    {
+        $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $string = $codeAlphabet[rand(0, (strlen($codeAlphabet)-1))] . random_int(0000000000, 9999999999);
+        return $string;
     }
 }
