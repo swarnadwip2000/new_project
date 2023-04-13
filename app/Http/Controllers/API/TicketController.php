@@ -78,7 +78,7 @@ class TicketController extends Controller
             }
             return response()->json(['error' => $errors, 'status' => false], 401);
         }
-            try {
+            try { 
                 $changeRequest = new ChangeRequest();
                 $changeRequest->stuff_id = Auth::user()->id;
                 $changeRequest->change_type = $request->change_type;
