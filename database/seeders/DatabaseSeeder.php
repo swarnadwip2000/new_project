@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ShiftSeeder::class,
             assignRoleSeeder::class,
             assignAdminSeeder::class,
+            AddVehicleCategory::class,
         ]);
     }
 }
