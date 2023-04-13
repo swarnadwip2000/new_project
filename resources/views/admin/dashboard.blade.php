@@ -46,7 +46,7 @@
                 </div>
                 
                 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                    <a href="{{ route('customers.index') }}" style="color: black">
+                    <a href="{{ route('stuffs.index') }}" style="color: black">
                         <div class="card dash-widget">
                             <div class="card-body">
                                 <span class="dash-widget-icon"><i class="fa fa-user"></i></span>

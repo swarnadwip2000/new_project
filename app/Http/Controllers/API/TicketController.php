@@ -21,7 +21,7 @@ class TicketController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'vehicle_number'    => 'required',
-            'vehicle_category_id'    => 'required|exists:id,vehicle_categories',
+            'vehicle_category_id'    => 'required|exists:vehicle_categories,id',
             'amount' => 'required|numeric',
             'status' => 'required|in:entry,return',
             'paid_by'=> 'required|numeric',

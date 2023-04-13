@@ -120,20 +120,16 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
-            'address' => 'required',
-            'phone' => 'required',
-            'status' => 'required',
-            'pincode' => 'required',
+            'toll' => 'required',
+            'shift' => 'required',
+            'status' => 'required'
         ]);
         $data = User::findOrFail($id);
         $data->name = $request->name;
         $data->email = $request->email;
-        $data->address = $request->address;
-        $data->phone = $request->phone;
+        $data->shift_id = $request->shift;
+        $data->toll_id = $request->toll;
         $data->status = $request->status;
-        $data->city = $request->city;
-        $data->country = $request->country;
-        $data->pincode = $request->pincode;
         if ($request->password != null) {
             $request->validate([
                 'password' => 'min:8',

@@ -59,7 +59,7 @@ Demo | Edit Stuff Details
                                                 <select name="toll" id="" class="form-control">
                                                     <option value="">Select a Name</option>
                                                     @foreach ($tolls as $toll)
-                                                        <option value="{{ $toll->id }}" @if($stuff['status'] == 1) selected="" @endif>{{ $toll->name }}</option>
+                                                        <option value="{{ $toll->id }}" @if($stuff->toll_id == $toll->id) selected="" @endif>{{ $toll->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @if($errors->has('toll'))
@@ -71,7 +71,7 @@ Demo | Edit Stuff Details
                                                 <select name="shift" id="" class="form-control">
                                                     <option value="">Select a sfift</option>
                                                     @foreach ($shifts as $shift)
-                                                        <option value="{{ $shift->id }}">{{ $shift->start_time }} - {{ $shift->end_time }}</option>
+                                                        <option value="{{ $shift->id }}" @if($stuff->shift_id == $shift->id) selected="" @endif>{{ $shift->start_time }} - {{ $shift->end_time }}</option>
                                                     @endforeach
                                                 </select>
                                                 @if($errors->has('shift'))

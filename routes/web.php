@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\SellerController;
+use App\Http\Controllers\Admin\ChangeRequestController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,5 +56,7 @@ Route::group(['middleware' => ['admin'], 'prefix'=>'admin'], function () {
     Route::get('/changeStuffStatus', [CustomerController::class, 'changeStuffStatus'])->name('stuffs.change-status');
 
     
-
+    Route::resources([
+        'change-request' => ChangeRequestController::class,
+    ]);
 });

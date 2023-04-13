@@ -23,10 +23,12 @@
                                        
                     </ul>
                 </li>
-                <li class="{{ Request::is('admin/customers*') ? 'active' : ' ' }}">
+                <li class="{{ Request::is('admin/stuffs*') ? 'active' : ' ' }}">
                     <a href="{{ route('stuffs.index') }}" ><i class="la la-users"></i> <span>Manage Stuffs</span></a>                 
                 </li>
-
+                <li class="{{ Request::is('admin/change-request*') ? 'active' : ' ' }}">
+                    <a href="{{ route('change-request.index') }}" ><i class="la la-paper-plane"></i> <span>Change Request</span></a>                 
+                </li>
             
                 {{-- <li class="{{ Request::is('admin/members*') ? 'active' : ' ' }}">
                     <a href="{{ route('user.index') }}"><i class="la la-users"></i> <span>Members</span></a>
