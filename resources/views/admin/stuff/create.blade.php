@@ -54,27 +54,27 @@ Demo | Create Customer
                                                 @endif
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> Phone <span style="color: red;">*</span></label>
-                                                <input type="text" name="phone" id="" class="form-control" value="{{ old('phone') }}" placeholder="Enter Phone Number">
-                                                @if($errors->has('phone'))
-                                                <div class="error" style="color:red;">{{ $errors->first('phone') }}</div>
+                                                <label for="inputEnterYourName" class="col-form-label"> Toll Name <span style="color: red;">*</span></label>
+                                                <select name="toll" id="" class="form-control">
+                                                    <option value="">Select a Name</option>
+                                                    @foreach ($tolls as $toll)
+                                                        <option value="{{ $toll->id }}">{{ $toll->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if($errors->has('toll'))
+                                                <div class="error" style="color:red;">{{ $errors->first('toll') }}</div>
                                                 @endif
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> City </label>
-                                                <input type="text" name="city" id="" class="form-control" value="{{ old('city') }}" placeholder="City">
-                                               
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> Country </label>
-                                                <input type="text" name="country" id="" class="form-control" value="{{ old('country') }}" placeholder="Country">
-                                              
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> Address <span style="color: red;">*</span></label>
-                                                <input type="text" name="address" id="" class="form-control" value="{{ old('address') }}" placeholder="Address">
-                                                @if($errors->has('address'))
-                                                <div class="error" style="color:red;">{{ $errors->first('address') }}</div>
+                                                <label for="inputEnterYourName" class="col-form-label"> Shift </label>
+                                                <select name="shift" id="" class="form-control">
+                                                    <option value="">Select a sfift</option>
+                                                    @foreach ($shifts as $shift)
+                                                        <option value="{{ $shift->id }}">{{ $shift->start_time }} - {{ $shift->end_time }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if($errors->has('shift'))
+                                                <div class="error" style="color:red;">{{ $errors->first('shift') }}</div>
                                                 @endif
                                             </div>
                                            
@@ -90,13 +90,6 @@ Demo | Create Customer
                                                 <input type="password" name="confirm_password" id="" class="form-control" value="{{ old('confirm_password') }}">
                                                 @if($errors->has('confirm_password'))
                                                 <div class="error" style="color:red;">{{ $errors->first('confirm_password') }}</div>
-                                                @endif
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> Pin Code <span style="color: red;">*</span></label>
-                                                <input type="text" name="pincode" id="" class="form-control" value="{{ old('pincode') }}" placeholder="Pincode">
-                                                @if($errors->has('pincode'))
-                                                <div class="error" style="color:red;">{{ $errors->first('pincode') }}</div>
                                                 @endif
                                             </div>
                                             <div class="col-md-6">

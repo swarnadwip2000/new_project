@@ -55,12 +55,9 @@
                                 <tr>
                                     <th> Name</th>
                                     <th> Email</th>
-                                    <th> Phone</th>
-                                    <th>Shift Time</th>
                                     <th>Stuff Id</th>
+                                    <th>Shift Time</th>
                                     <th>Toll Name</th>
-                                    <th>Lat</th>
-                                    <th>Lang</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -70,10 +67,9 @@
                                     <tr>
                                         <td>{{ $stuff->name }}</td>
                                         <td>{{ $stuff->email }}</td>
-                                        <td>{{ $stuff->phone }}</td>
-                                        <td>{{ $stuff->city }}</td>
-                                        <td>{{ $stuff->country }}</td>
-                                        <td>{{ $stuff->address }}</td>
+                                        <td>{{ $stuff->stuff_id }}</td>
+                                        <td>{{ $stuff->shift->start_time }} - {{ $stuff->shift->end_time }}</td>
+                                        <td>{{ $stuff->toll->name }}</td>
                                         <td>
                                             <div class="button-switch">
                                                 <input type="checkbox" id="switch-orange" class="switch toggle-class"
@@ -111,11 +107,11 @@
                 "aaSorting": [],
                 "columnDefs": [{
                         "orderable": false,
-                        "targets": [6,7]
+                        "targets": [5,6]
                     },
                     {
                         "orderable": true,
-                        "targets": [0, 1, 2, 3, 4 ,5 ]
+                        "targets": [0, 1, 2, 3, 4 ]
                     }
                 ]
             });
