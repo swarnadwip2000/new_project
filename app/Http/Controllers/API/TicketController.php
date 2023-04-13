@@ -21,9 +21,9 @@ class TicketController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'vehicle_number'    => 'required',
-            'vehicle_category'    => 'required|exists:vehicle_categories',
+            'vehicle_category_id'    => 'required|exists:id,vehicle_categories',
             'amount' => 'required|numeric',
-            'user_type' => 'required|in:entry,return',
+            'status' => 'required|in:entry,return',
             'paid_by'=> 'required|numeric',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg,webp|max:2048',
         ]);
@@ -48,7 +48,7 @@ class TicketController extends Controller
                 $ticket->ticket_number = Str::random(1).''.rand(0000,9999).''.Str::random(1).''.rand(000000000,999999999);
                 $ticket->vehicle_category = $request->vehicle_category;
                 $ticket->amount = $request->amount;
-                $ticket->user_type = $request->user_type;
+                $ticket->status = $request->status;
                 $ticket->paid_by = $request->paid_by;
                 $ticket->image = $this->imageUpload($request->file('image'), 'ticket');
                 $ticket->save();
@@ -63,6 +63,7 @@ class TicketController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'change_type'    => 'required',
+            'ticket_number'    => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -79,12 +80,18 @@ class TicketController extends Controller
             return response()->json(['error' => $errors, 'status' => false], 401);
         }
             try { 
-                $changeRequest = new ChangeRequest();
-                $changeRequest->stuff_id = Auth::user()->id;
-                $changeRequest->change_type = $request->change_type;
-                $changeRequest->save();
-                return response()->json(['data' => $changeRequest, 'status' => true, 'message' => 'Request has been sent successfullty.'], $this->successStatus);
-               
+                $count = Ticket::where('ticket_number', $request->ticket_number)->count();
+                if($count > 0) {
+                    $changeRequest = new ChangeRequest();
+                    $changeRequest->stuff_id = Auth::user()->id;
+                    $changeRequest->ticket_number = $request->ticket_number;
+                    $changeRequest->change_type = $request->change_type;
+                    $changeRequest->save();
+                    return response()->json(['data' => $changeRequest, 'status' => true, 'message' => 'Request has been sent successfullty.'], $this->successStatus);    
+                }else {
+                return response()->json(['status' => true, 'message' => 'Ticket number is invalid.'], $this->successStatus);
+                }
+                
             } catch (Exception $e) {
                 return response()->json(['message' => 'something went wrong' , 'status' => false], 401);
             }  
