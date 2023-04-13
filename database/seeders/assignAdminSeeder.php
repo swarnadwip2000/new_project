@@ -18,6 +18,8 @@ class assignAdminSeeder extends Seeder
         $admin->name = 'Admin Admin';
         $admin->email = 'main@yopmail.com';
         $admin->password = bcrypt('12345678');
+        $admin->toll_id = 1;
+        $admin->shift_id = 1;
         $admin->status = true;
         $admin->save();
         $admin->assignRole('ADMIN');

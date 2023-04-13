@@ -42,4 +42,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Toll name
+     */
+    public function toll()
+    {
+        return $this->belongsTo(Toll::class);
+    }
+
+    /**
+     * Shift name
+     */
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
+    }
 }

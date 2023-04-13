@@ -39,33 +39,20 @@ Route::group(['middleware' => ['admin'], 'prefix'=>'admin'], function () {
     Route::post('profile/update', [ProfileController::class, 'profileUpdate'])->name('admin.profile.update');
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-    Route::prefix('detail')->group(function () {
-        Route::get('/',[AdminController::class,'index'])->name('admin.index');
-        Route::post('/store',[AdminController::class,'store'])->name('admin.store');
-        Route::post('/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
-        Route::get('/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
-        Route::post('/update',[AdminController::class, 'update'])->name('admin.update'); 
-    });   
-    
     Route::prefix('password')->group(function () {
         Route::get('/', [ProfileController::class, 'password'])->name('admin.password'); // password change
         Route::post('/update', [ProfileController::class, 'passwordUpdate'])->name('admin.password.update'); // password update
     });    
 
     Route::resources([
-        'customers' => CustomerController::class,
-        'sellers' => SellerController::class,
+        'stuffs' => CustomerController::class,
     ]);
     //  Customer Routes
-    Route::prefix('customers')->group(function () {
-        Route::get('/customer-delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
+    Route::prefix('stuffs')->group(function () {
+        Route::get('/stuff-delete/{id}', [CustomerController::class, 'delete'])->name('stuffs.delete');
     });
-    Route::get('/changeCustomerStatus', [CustomerController::class, 'changeCustomersStatus'])->name('customers.change-status');
+    Route::get('/changeStuffStatus', [CustomerController::class, 'changeStuffStatus'])->name('stuffs.change-status');
 
-    // Seller Routes
-    Route::get('/changeSellerStatus', [SellerController::class, 'changeSellersStatus'])->name('sellers.change-status');
-    Route::prefix('sellers')->group(function () {
-        Route::get('/seller-delete/{id}', [SellerController::class, 'delete'])->name('sellers.delete');
-    });
+    
 
 });
