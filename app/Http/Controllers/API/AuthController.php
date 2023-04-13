@@ -17,7 +17,6 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email'    => 'required|email|regex:/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix',
             'password' => 'required|min:8',
-            'user_type' => 'required|in:STUFF',
         ]);
 
 
@@ -37,7 +36,6 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = User::where('email', $request->email)->first();
-            if ($request->user_type == 'STUFF') {
                 if ($user->hasRole('STUFF') && $user->status == 1 ) {
                     $data['auth_token'] = $user->createToken('accessToken')->accessToken;
                     $data['user'] = $user->makeHidden('roles');
@@ -45,15 +43,7 @@ class AuthController extends Controller
                 } else {
                     return response()->json(['messager' => 'Email id & password was invalid!', 'status' => false], 401);
                 }
-            } else {
-                if ($user->hasRole('BUSINESS_OWNER') && $user->status == 1) {
-                    $data['auth_token'] = $user->createToken('accessToken')->accessToken;
-                    $data['user'] = $user->makeHidden('roles');
-                    return response()->json(['data' => $data, 'status' => true, 'message' => 'Logged in successfully.'], $this->successStatus);
-                } else {
-                    return response()->json(['messager' => 'Email id & password was invalid!', 'status' => false], 401);
-                }
-            }
+           
         } else {
             return response()->json(['messager' => 'Email id & password was invalid!', 'status' => false], 401);
         }
