@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-Demo | Edit Customer Details
+Demo | Edit Stuff Details
 @endsection
 @push('styles')
 @endpush
@@ -15,13 +15,13 @@ Demo | Edit Customer Details
                 <div class="col">
                     <h3 class="page-title">Edit Details</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('customers.index') }}">Customers</a></li>
-                        <li class="breadcrumb-item active">Edit Customer Details</li>
+                        <li class="breadcrumb-item"><a href="{{ route('stuffs.index') }}">stuffs</a></li>
+                        <li class="breadcrumb-item active">Edit Stuff Details</li>
                     </ul>
                 </div>
                 <div class="col-auto float-end ms-auto">
                     {{-- <a href="#" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_group"><i
-                            class="fa fa-plus"></i> Add Customer</a> --}}
+                            class="fa fa-plus"></i> Add stuff</a> --}}
                 </div>
             </div>
         </div>
@@ -31,51 +31,51 @@ Demo | Edit Customer Details
                 <div class="card-title">
                     <div class="row">
                     <div class="col-xl-12 mx-auto">
-                        <h6 class="mb-0 text-uppercase">Edit A Customer</h6>
+                        <h6 class="mb-0 text-uppercase">Edit A stuff</h6>
                         <hr>
                         <div class="card border-0 border-4">
                             <div class="card-body">
-                                <form action="{{ route('customers.update', $customer->id) }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('stuffs.update', $stuff->id) }}" method="POST" enctype="multipart/form-data">
                                     @method('PUT')
                                     @csrf
                                     <div class="border p-4 rounded">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="inputEnterYourName" class="col-form-label"> Name <span style="color: red;">*</span></label>
-                                                <input type="text" name="name" id="" class="form-control" value="{{ $customer['name'] }}" placeholder="Enter Customer Name">
+                                                <input type="text" name="name" id="" class="form-control" value="{{ $stuff['name'] }}" placeholder="Enter stuff Name">
                                                 @if($errors->has('name'))
                                                 <div class="error" style="color:red;">{{ $errors->first('name') }}</div>
                                                 @endif
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="inputEnterYourName" class="col-form-label"> Email <span style="color: red;">*</span></label>
-                                                <input type="text" name="email" id="" class="form-control" value="{{ $customer['email'] }}" placeholder="Enter Customer Email">
+                                                <input type="text" name="email" id="" class="form-control" value="{{ $stuff['email'] }}" placeholder="Enter stuff Email">
                                                 @if($errors->has('email'))
                                                 <div class="error" style="color:red;">{{ $errors->first('email') }}</div>
                                                 @endif
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> Phone <span style="color: red;">*</span></label>
-                                                <input type="text" name="phone" id="" class="form-control" value="{{ $customer['phone'] }}" placeholder="Enter Phone Number">
-                                                @if($errors->has('phone'))
-                                                <div class="error" style="color:red;">{{ $errors->first('phone') }}</div>
+                                                <label for="inputEnterYourName" class="col-form-label"> Toll Name <span style="color: red;">*</span></label>
+                                                <select name="toll" id="" class="form-control">
+                                                    <option value="">Select a Name</option>
+                                                    @foreach ($tolls as $toll)
+                                                        <option value="{{ $toll->id }}" @if($stuff['status'] == 1) selected="" @endif>{{ $toll->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if($errors->has('toll'))
+                                                <div class="error" style="color:red;">{{ $errors->first('toll') }}</div>
                                                 @endif
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> City </label>
-                                                <input type="text" name="city" id="" class="form-control" value="{{ $customer['city'] }}" placeholder="City">
-                                               
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> Country </label>
-                                                <input type="text" name="country" id="" class="form-control" value="{{ $customer['country'] }}" placeholder="Country">
-                                              
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> Address <span style="color: red;">*</span></label>
-                                                <input type="text" name="address" id="" class="form-control" value="{{ $customer['address'] }}" placeholder="Address">
-                                                @if($errors->has('address'))
-                                                <div class="error" style="color:red;">{{ $errors->first('address') }}</div>
+                                                <label for="inputEnterYourName" class="col-form-label"> Shift </label>
+                                                <select name="shift" id="" class="form-control">
+                                                    <option value="">Select a sfift</option>
+                                                    @foreach ($shifts as $shift)
+                                                        <option value="{{ $shift->id }}">{{ $shift->start_time }} - {{ $shift->end_time }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if($errors->has('shift'))
+                                                <div class="error" style="color:red;">{{ $errors->first('shift') }}</div>
                                                 @endif
                                             </div>
                                            
@@ -88,24 +88,17 @@ Demo | Edit Customer Details
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="inputEnterYourName" class="col-form-label"> Confirm Password </label>
-                                                <input type="password" name="confirm_password" id="" class="form-control" value="{{ $customer['confirm_password'] }}">
+                                                <input type="password" name="confirm_password" id="" class="form-control" value="{{ $stuff['confirm_password'] }}">
                                                 @if($errors->has('confirm_password'))
                                                 <div class="error" style="color:red;">{{ $errors->first('confirm_password') }}</div>
-                                                @endif
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="inputEnterYourName" class="col-form-label"> Pin Code <span style="color: red;">*</span></label>
-                                                <input type="text" name="pincode" id="" class="form-control" value="{{ $customer['pincode'] }}" placeholder="Pincode">
-                                                @if($errors->has('pincode'))
-                                                <div class="error" style="color:red;">{{ $errors->first('pincode') }}</div>
                                                 @endif
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="inputEnterYourName" class="col-form-label"> Status <span style="color: red;">*</span></label>
                                                 <select name="status" id="" class="form-control">
                                                     <option value="">Select a Status</option>
-                                                    <option value="1" @if($customer['status'] == 1) selected="" @endif>Active</option>
-                                                    <option value="0" @if($customer['status'] == 0) selected="" @endif>Inactive</option>
+                                                    <option value="1" @if($stuff['status'] == 1) selected="" @endif>Active</option>
+                                                    <option value="0" @if($stuff['status'] == 0) selected="" @endif>Inactive</option>
                                                 </select>
                                                 @if($errors->has('status'))
                                                 <div class="error" style="color:red;">{{ $errors->first('status') }}</div>
@@ -113,16 +106,16 @@ Demo | Edit Customer Details
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="inputEnterYourName" class="col-form-label"> Profile Picture </label>
-                                                <input type="file" name="profile_picture" id="" class="form-control" value="{{ $customer['profile_picture'] }}">
+                                                <input type="file" name="profile_picture" id="" class="form-control" value="{{ $stuff['profile_picture'] }}">
                                                 @if($errors->has('profile_picture'))
                                                 <div class="error" style="color:red;">{{ $errors->first('profile_picture') }}</div>
                                                 @endif
                                             </div>
-                                            @if($customer['profile_picture'])
+                                            @if($stuff['profile_picture'])
                                             <div class="col-md-6">
                                                 <label for="inputEnterYourName" class="col-form-label">View Profile Picture </label>
                                                 <br>
-                                               <img src="{{ Storage::url($customer['profile_picture']) }}" alt="" class="img-design">
+                                               <img src="{{ Storage::url($stuff['profile_picture']) }}" alt="" class="img-design">
                                             </div>
                                             @endif
                                         <div class="row" style="margin-top: 20px; float: left;">
