@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +19,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'v1'], function () {
+    Route::post('login', [AuthController::class, 'login']);
+
+    Route::group(['prefix' => 'stuff', 'middleware' => 'auth:api'], function () {
+        Route::post('me', [ProfileController::class, 'details']);
+        // Add ticket
+        Route::post('create-ticket', [TicketController::class, 'createTicket']);
+        Route::post('change-request', [TicketController::class, 'changeRequest']);
+    });
 });
