@@ -24,8 +24,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = User::Role('CUSTOMER')->get();
-        return view('admin.customer.list')->with(compact('customers'));
+        $stuffs = User::Role('STUFF')->get();
+        return view('admin.stuff.list')->with(compact('stuffs'));
     }
 
     /**
@@ -35,7 +35,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('admin.customer.create');
+        return view('admin.stuff.create');
     }
 
     /**
@@ -70,16 +70,16 @@ class CustomerController extends Controller
         $data->pincode = $request->pincode;
         $data->profile_picture = $this->imageUpload($request->file('profile_picture'), 'customer');
         $data->save();
-        $data->assignRole('CUSTOMER');
+        $data->assignRole('STUFF');
         $maildata = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-            'type' => 'Customer',
+            'type' => 'Stuff',
         ];
 
         Mail::to($request->email)->send(new RegistrationMail($maildata));
-        return redirect()->route('customers.index')->with('message', 'Customer created successfully.');
+        return redirect()->route('stuffs.index')->with('message', 'Stuff created successfully.');
     }
 
     /**
@@ -100,8 +100,8 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = User::findOrFail($id);
-        return view('admin.customer.edit')->with(compact('customer'));
+        $stuff = User::findOrFail($id);
+        return view('admin.stuff.edit')->with(compact('stuff'));
     }
 
     /**
@@ -148,7 +148,7 @@ class CustomerController extends Controller
             $data->profile_picture = $this->imageUpload($request->file('profile_picture'), 'customer');
         }
         $data->save();
-        return redirect()->route('customers.index')->with('message', 'Customer updated successfully.');
+        return redirect()->route('stuffs.index')->with('message', 'Stuff updated successfully.');
     }
 
     /**
@@ -162,7 +162,7 @@ class CustomerController extends Controller
         //
     }
 
-    public function changeCustomersStatus(Request $request)
+    public function changeStuffStatus(Request $request)
     {
         $user = User::find($request->user_id);
         $user->status = $request->status;
@@ -174,6 +174,6 @@ class CustomerController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('customers.index')->with('error', 'Customer has been deleted successfully.');
+        return redirect()->route('stuffs.index')->with('error', 'Stuff has been deleted successfully.');
     }
 }

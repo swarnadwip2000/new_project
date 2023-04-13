@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-    All Seller Details - Derick Veliz admin
+    All Stuff Details - Derick Veliz admin
 @endsection
 @push('styles')
 <style>
@@ -24,15 +24,15 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Sellers Information</h3>
+                        <h3 class="page-title">stuffs Information</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('sellers.index') }}">Sellers</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('stuffs.index') }}">stuffs</a></li>
                             <li class="breadcrumb-item active">List</li>
                         </ul>
                     </div>
                     <div class="col-auto float-end ms-auto">
-                        <a href="{{ route('sellers.create') }}" class="btn add-btn" ><i
-                                class="fa fa-plus"></i> Add a Seller</a>
+                        <a href="{{ route('stuffs.create') }}" class="btn add-btn" ><i
+                                class="fa fa-plus"></i> Add a Stuff</a>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                     <div class="card-title">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4 class="mb-0">Sellers Details</h4>
+                                <h4 class="mb-0">Stuff Details</h4>
                             </div>
 
                         </div>
@@ -56,36 +56,38 @@
                                     <th> Name</th>
                                     <th> Email</th>
                                     <th> Phone</th>
-                                    <th>City</th>
-                                    <th>State</th>
-                                    <th>Address</th>
+                                    <th>Shift Time</th>
+                                    <th>Stuff Id</th>
+                                    <th>Toll Name</th>
+                                    <th>Lat</th>
+                                    <th>Lang</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($sellers as $key => $seller)
+                                @foreach ($stuffs as $key => $stuff)
                                     <tr>
-                                        <td>{{ $seller->name }}</td>
-                                        <td>{{ $seller->email }}</td>
-                                        <td>{{ $seller->phone }}</td>
-                                        <td>{{ $seller->city }}</td>
-                                        <td>{{ $seller->country }}</td>
-                                        <td>{{ $seller->address }}</td>
+                                        <td>{{ $stuff->name }}</td>
+                                        <td>{{ $stuff->email }}</td>
+                                        <td>{{ $stuff->phone }}</td>
+                                        <td>{{ $stuff->city }}</td>
+                                        <td>{{ $stuff->country }}</td>
+                                        <td>{{ $stuff->address }}</td>
                                         <td>
                                             <div class="button-switch">
                                                 <input type="checkbox" id="switch-orange" class="switch toggle-class"
-                                                    data-id="{{ $seller['id'] }}"
-                                                    {{ $seller['status'] ? 'checked' : '' }} />
+                                                    data-id="{{ $stuff['id'] }}"
+                                                    {{ $stuff['status'] ? 'checked' : '' }} />
                                                 <label for="switch-orange" class="lbl-off"></label>
                                                 <label for="switch-orange" class="lbl-on"></label>
                                             </div>
                                         </td>
                                         <td>
-                                            <a title="Edit Seller" data-route=""
-                                                href="{{ route('sellers.edit', $seller->id) }}"><i class="fas fa-edit"></i></a> &nbsp;&nbsp;
+                                            <a title="Edit stuff" data-route=""
+                                                href="{{ route('stuffs.edit', $stuff->id) }}"><i class="fas fa-edit"></i></a> &nbsp;&nbsp;
 
-                                            <a title="Delete Seller" data-route="{{ route('sellers.delete', $seller->id) }}"
+                                            <a title="Delete stuff" data-route="{{ route('stuffs.delete', $stuff->id) }}"
                                                 href="javascipt:void(0);" id="delete"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
@@ -124,7 +126,7 @@
         $(document).on('click', '#delete', function(e) {
             swal({
                     title: "Are you sure?",
-                    text: "To delete this seller.",
+                    text: "To delete this stuff.",
                     type: "warning",
                     confirmButtonText: "Yes",
                     showCancelButton: true
@@ -150,7 +152,7 @@
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: '{{route("sellers.change-status")}}',
+                url: '{{route("stuffs.change-status")}}',
                 data: {
                     'status': status,
                     'user_id': user_id

@@ -20,20 +20,14 @@
                         <li class="{{ Request::is('admin/password*') ? 'active' : ' ' }}">
                             <a href="{{ route('admin.password') }}">Change Password</a>
                         </li>
-                        <li class="{{ Request::is('admin/detail*') ? 'active' : ' ' }}">
-                            <a href="{{ route('admin.index') }}">Admin List</a>
-                        </li>                     
+                                       
                     </ul>
                 </li>
                 <li class="{{ Request::is('admin/customers*') ? 'active' : ' ' }}">
-                    <a href="{{ route('customers.index') }}" ><i class="la la-users"></i> <span>Manage Customers</span></a>                 
+                    <a href="{{ route('stuffs.index') }}" ><i class="la la-users"></i> <span>Manage Stuffs</span></a>                 
                 </li>
 
-                <li class="{{ Request::is('admin/sellers*') ? 'active' : ' ' }}">
-                    <a href="{{ route('sellers.index') }}" ><i class="la la-user"></i> <span>Manage Sellers</span></a>                 
-                </li>
-                
-
+            
                 {{-- <li class="{{ Request::is('admin/members*') ? 'active' : ' ' }}">
                     <a href="{{ route('user.index') }}"><i class="la la-users"></i> <span>Members</span></a>
                 </li>
